@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "advent-of-code"
+version = "0.1.0"
+description = ""
+authors = ["Thorvald Molthe Ballestad <thorvald@simula.no>"]
+readme = "README.md"
+packages = [{include = "advent_of_code"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pytest = "^7.4.3"
+pydantic = "^2.5.2"
+pydantic-settings = "^2.1.0"
+requests = "^2.31.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
