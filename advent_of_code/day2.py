@@ -62,8 +62,12 @@ def main():
     input = get_input_text(2)
     games = (Game.from_line(line) for line in input.strip().split('\n'))
 
-    bag = {"red": 12, "green": 13, "blue": 14}
-    answer = sum(game.id for game in games if game.is_compatible_with(**bag))
+    minimal_bags = (game.minimal_compatible_bag() for game in games)
+    
+    answer = sum(
+        bag["red"] * bag["green"] * bag["blue"]
+        for bag in minimal_bags
+    )
 
     print(answer)
 
