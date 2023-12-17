@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from advent_of_code.util import get_input_text
 
+
 @dataclass(frozen=True, slots=True)
 class Draw:
     red: int = 0
@@ -18,9 +19,11 @@ class Draw:
             counts[color.strip()] = int(count.strip())
         return Draw(**counts)
 
+
 @dataclass(frozen=True, slots=True)
 class Game:
     """Results from one game."""
+
     id: int
     draws: list[Draw]
 
@@ -39,16 +42,12 @@ class Game:
         draws = []
         for draw in draw_part.split(";"):
             draws.append(Draw.from_line(draw))
-        return Game(
-            id=id,
-            draws=draws
-        )
+        return Game(id=id, draws=draws)
 
     def is_compatible_with(self, red: int, green: int, blue: int) -> bool:
         """Is the game compatible with given numbers?"""
         return all(
-            draw.red <= red and draw.green <= green and draw.blue <= blue
-            for draw in self.draws
+            draw.red <= red and draw.green <= green and draw.blue <= blue for draw in self.draws
         )
 
     def minimal_compatible_bag(self):
@@ -58,18 +57,17 @@ class Game:
             "blue": max(draw.blue for draw in self.draws),
         }
 
+
 def main():
     input = get_input_text(2)
-    games = (Game.from_line(line) for line in input.strip().split('\n'))
+    games = (Game.from_line(line) for line in input.strip().split("\n"))
 
     minimal_bags = (game.minimal_compatible_bag() for game in games)
-    
-    answer = sum(
-        bag["red"] * bag["green"] * bag["blue"]
-        for bag in minimal_bags
-    )
+
+    answer = sum(bag["red"] * bag["green"] * bag["blue"] for bag in minimal_bags)
 
     print(answer)
+
 
 if __name__ == "__main__":
     main()

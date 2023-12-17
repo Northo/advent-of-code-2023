@@ -1,6 +1,6 @@
 """Way too overcomplicated solution using a search over Trie trees."""
 import functools
-from typing import Hashable, Iterable
+from collections.abc import Hashable, Iterable
 
 from advent_of_code.util import get_input_text
 
@@ -10,7 +10,6 @@ def generate_trie_tree(words: Iterable[Iterable[Hashable]]) -> dict:
 
     See https://en.wikipedia.org/wiki/Trie for background.
     """
-
     tree = {}
     for word in words:
         functools.reduce(lambda base, el: base.setdefault(el, {}), word, tree)
@@ -74,13 +73,13 @@ def main():
 
     string_to_value = get_string_to_value()
     tree = generate_trie_tree(get_string_to_value())
-    reverse_tree = generate_trie_tree(
-        (reversed(element) for element in get_string_to_value())
-    )
+    reverse_tree = generate_trie_tree(reversed(element) for element in get_string_to_value())
 
     answer = sum(
-        int(string_to_value[find_occurence(tree, line)]
-        + string_to_value[find_occurence(reverse_tree, line[::-1])[::-1]])
+        int(
+            string_to_value[find_occurence(tree, line)]
+            + string_to_value[find_occurence(reverse_tree, line[::-1])[::-1]]
+        )
         for line in lines
     )
     print(answer)
