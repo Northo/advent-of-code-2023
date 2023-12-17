@@ -10,7 +10,7 @@ def generate_trie_tree(words: Iterable[Iterable[Hashable]]) -> dict:
 
     See https://en.wikipedia.org/wiki/Trie for background.
     """
-    tree = {}
+    tree: dict[Hashable, dict] = {}
     for word in words:
         functools.reduce(lambda base, el: base.setdefault(el, {}), word, tree)
     return tree

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 
 from advent_of_code.util import get_input_text
@@ -10,7 +12,7 @@ class Draw:
     blue: int = 0
 
     @classmethod
-    def from_line(cls, line: str) -> "cls":
+    def from_line(cls, line: str) -> Draw:
         # Line should be on format
         # 3 blue, 4 red
         counts = {}
@@ -28,7 +30,7 @@ class Game:
     draws: list[Draw]
 
     @classmethod
-    def from_line(cls, line: str) -> "cls":
+    def from_line(cls, line: str) -> Game:
         # Line should look like
         # Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
         id_part, draw_part = line.split(":")
