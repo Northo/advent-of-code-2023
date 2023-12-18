@@ -23,10 +23,9 @@ def line_to_records(line: str) -> list[dict]:
 
 
 def lines_to_records(lines: list[str]) -> list[dict]:
-    wide_form_records = []
+    wide_form_records: list[dict] = []
     for i, line in enumerate(lines):
-        for record in line_to_records(line):
-            wide_form_records.append(record | {"line": i})
+        wide_form_records.extend(record | {"line": i} for record in line_to_records(line))
 
     # Make it long-form
     long_form_records: list[dict[str, Any]] = []
