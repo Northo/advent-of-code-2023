@@ -1,11 +1,18 @@
+import re
+from typing import Any
+
+from advent_of_code.util import get_input_text
+
+
 def line_to_records(line: str) -> list[dict]:
     """Extract all the objects on a line."""
-    parts = line.split(".")
+    # \d = digit, \D = non-digit
+    parts = re.findall(r"\d+|\D", line)
     character_counter = 0
     objects = []
 
     for part in parts:
-        if part:  # do not add empty elements (Only dots)
+        if part != ".":  # do not add empty elements (Only dots)
             objects.append(
                 {
                     "element": part,
@@ -13,7 +20,7 @@ def line_to_records(line: str) -> list[dict]:
                     "end_pos": character_counter + len(part) - 1,
                 }
             )
-        character_counter += len(part) + 1  # Add one to take into account the .
+        character_counter += len(part)
     return objects
 
 

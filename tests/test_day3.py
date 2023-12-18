@@ -20,6 +20,14 @@ from advent_of_code.day3 import line_to_records, lines_to_records
                 {"element": "*", "start_pos": 7, "end_pos": 7},
             ],
         ),
+        (
+            "467$...*..",
+            [
+                {"element": "467", "start_pos": 0, "end_pos": 2},
+                {"element": "$", "start_pos": 3, "end_pos": 3},
+                {"element": "*", "start_pos": 7, "end_pos": 7},
+            ],
+        ),
     ],
 )
 def test_line_to_records(line: str, records: list[dict]):
