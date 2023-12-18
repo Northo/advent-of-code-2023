@@ -1,6 +1,6 @@
 import pytest
 
-from advent_of_code.day3 import line_to_records, lines_to_records
+from advent_of_code.day3 import get_neighbouring_positions, line_to_records, lines_to_records
 
 
 @pytest.mark.parametrize(
@@ -50,3 +50,18 @@ def test_lines_to_records():
         {"element_id": 2, "pos": 2, "line": 1, "element": "467"},
         {"element_id": 3, "pos": 7, "line": 1, "element": "*"},
     ]
+
+
+def test_neighbouring_positions():
+    position = (4, 5)
+    expected_neighbours = [
+        (3, 5),
+        (5, 5),
+        (3, 6),
+        (4, 6),
+        (5, 6),
+        (3, 4),
+        (4, 4),
+        (5, 4),
+    ]
+    assert set(expected_neighbours) == set(get_neighbouring_positions(*position))
