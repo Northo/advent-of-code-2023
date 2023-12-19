@@ -1,3 +1,5 @@
+from collections import defaultdict
+from collections.abc import Iterable
 from dataclasses import dataclass
 
 from advent_of_code.util import get_input_text
@@ -50,8 +52,21 @@ def main():
     lines = get_input_text(4).strip().split("\n")
     cards = [Card.parse_from_line(line) for line in lines]
 
-    answer = sum(card.points for card in cards)
+    number_of_copies = compute_number_of_copies(cards)
+
+    answer = sum(number_of_copies.values()) + len(cards)
     print(answer)
+
+
+def compute_number_of_copies(cards: Iterable[Card]) -> dict[int, int]:
+    """Compute the number of copies per card."""
+    number_of_copies: dict[int, int] = defaultdict(lambda: 0)
+
+    for card in cards:
+        # Add copies based on the points
+        for i in range(len(card.winning_numbers_overlap)):
+            number_of_copies[card.id + i + 1] += 1 * (number_of_copies[card.id] + 1)
+    return number_of_copies
 
 
 if __name__ == "__main__":

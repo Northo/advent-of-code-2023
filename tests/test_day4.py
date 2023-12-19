@@ -1,6 +1,6 @@
 import pytest
 
-from advent_of_code.day4 import Card
+from advent_of_code.day4 import Card, compute_number_of_copies
 
 
 @pytest.mark.parametrize(
@@ -38,3 +38,15 @@ def test_parse_card_from_line(line: str, expected_card: Card):
 )
 def test_card_points(card: Card, points: int):
     assert card.points == points
+
+
+def test_compute_number_of_copies():
+    cards = [
+        Card(id=0, winning_numbers=[11, 22], present_numbers=[11, 22]),  # two matching
+        Card(id=1, winning_numbers=[11], present_numbers=[11, 22]),  # one matching
+    ]
+    assert compute_number_of_copies(cards) == {
+        0: 0,
+        1: 1,
+        2: 3,
+    }
