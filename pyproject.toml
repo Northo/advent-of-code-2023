@@ -10,6 +10,13 @@ authors = ["Northo <john@example.com>"]
 readme = "README.md"
 repository = "https://github.com/Northo/advent-of-code-2023"
 
+[tool.commitizen]  # https://commitizen-tools.github.io/commitizen/config/
+bump_message = "bump(release): v$current_version → v$new_version"
+tag_format = "v$version"
+update_changelog_on_bump = true
+version = "0.0.0"
+version_files = ["pyproject.toml:version"]
+
 [tool.poetry.dependencies]  # https://python-poetry.org/docs/dependency-specification/
 python = ">=3.12,<4.0"
 pydantic = "^2.5.2"
@@ -17,6 +24,7 @@ pydantic-settings = "^2.1.0"
 pandas = "^2.1.4"
 
 [tool.poetry.group.test.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
+commitizen = ">=3.2.1"
 coverage = { extras = ["toml"], version = ">=7.2.5" }
 mypy = ">=1.2.0"
 poethepoet = ">=0.20.0"

@@ -35,7 +35,6 @@ To add and install this package as a dependency of your project, run `poetry add
 1. [Install Docker Desktop](https://www.docker.com/get-started).
     - Enable _Use Docker Compose V2_ in Docker Desktop's preferences window.
     - _Linux only_:
-        - [Configure Docker to use the BuildKit build system](https://docs.docker.com/build/buildkit/#getting-started). On macOS and Windows, BuildKit is enabled by default in Docker Desktop.
         - Export your user's user id and group id so that [files created in the Dev Container are owned by your user](https://github.com/moby/moby/issues/3206):
             ```sh
             cat << EOF >> ~/.bashrc
@@ -72,8 +71,10 @@ The following development environments are supported:
 <details>
 <summary>Developing</summary>
 
+- This project follows the [Conventional Commits](https://www.conventionalcommits.org/) standard to automate [Semantic Versioning](https://semver.org/) and [Keep A Changelog](https://keepachangelog.com/) with [Commitizen](https://github.com/commitizen-tools/commitizen).
 - Run `poe` from within the development environment to print a list of [Poe the Poet](https://github.com/nat-n/poethepoet) tasks available to run on this project.
 - Run `poetry add {package}` from within the development environment to install a run time dependency and add it to `pyproject.toml` and `poetry.lock`. Add `--group test` or `--group dev` to install a CI or development dependency, respectively.
 - Run `poetry update` from within the development environment to upgrade all dependencies to the latest versions allowed by `pyproject.toml`.
+- Run `cz bump` to bump the package's version, update the `CHANGELOG.md`, and create a git tag.
 
 </details>
