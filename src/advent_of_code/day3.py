@@ -1,4 +1,3 @@
-import itertools
 import re
 from typing import Any
 
@@ -64,14 +63,17 @@ def main():
 
     # For all the non-numeric entries, find the relevant numbers
     part_positions = records.query("~is_number").index.to_list()
-    relevant_neigbouring_positions = itertools.chain.from_iterable(
-        get_neighbouring_positions(*position) for position in part_positions
-    )
-    existing_neigbouring_positions = list(
-        set(relevant_neigbouring_positions) & set(records.query("is_number").index)
+    relevant_neigbouring_positions = get_neigbour_positions(
+        part_positions, existing_positions=records.query("is_number").index
     )
 
-    element_ids = records.loc[existing_neigbouring_positions].element_id.unique()
+    element_ids_per_part = [
+        get_element_ids(records, positions) for positions in relevant_neigbouring_positions
+    ]
+    # Filter to only those where there are two elements
+    element_ids_per_part = [
+        element_ids for element_ids in element_ids_per_part if len(element_ids) == 2
+    ]
 
     # We now have all the element_ids, time to get the element number and return it
     numeric_element_values = (
@@ -82,8 +84,26 @@ def main():
         .to_dict()
     )
 
-    answer = sum(numeric_element_values[id] for id in element_ids)
+    def gear_product_from_elment_ids(element_ids):
+        assert len(element_ids) == 2
+        return numeric_element_values[element_ids[0]] * numeric_element_values[element_ids[1]]
+
+    answer = sum(gear_product_from_elment_ids(element_ids) for element_ids in element_ids_per_part)
     print(answer)
+
+
+def get_element_ids(records, indices):
+    return records.loc[indices].element_id.unique()
+
+
+def get_neigbour_positions(part_positions, existing_positions):
+    """Per part_position, get a list of neigbours"""
+    potential_positions = [get_neighbouring_positions(*position) for position in part_positions]
+
+    def _get_existing(positions):
+        return list(set(positions) & set(existing_positions))
+
+    return [_get_existing(positions) for positions in potential_positions]
 
 
 def get_processed_data():
