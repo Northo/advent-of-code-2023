@@ -50,6 +50,9 @@ def main():
     lines = get_input_text(4).strip().split("\n")
     cards = [Card.parse_from_line(line) for line in lines]
 
+    answer = sum(card.points for card in cards)
+    print(answer)
+
 
 if __name__ == "__main__":
     main()
