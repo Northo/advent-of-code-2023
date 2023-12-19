@@ -60,10 +60,7 @@ def get_neighbouring_positions(pos: int, line: int) -> list[tuple[int, int]]:
 
 
 def main():
-    lines = get_input_text(3).strip().split("\n")
-    records = pd.DataFrame(lines_to_records(lines))
-    records["is_number"] = records["element"].str.isnumeric()
-    records = records.set_index(["pos", "line"])
+    records = get_processed_data()
 
     # For all the non-numeric entries, find the relevant numbers
     part_positions = records.query("~is_number").index.to_list()
@@ -87,6 +84,14 @@ def main():
 
     answer = sum(numeric_element_values[id] for id in element_ids)
     print(answer)
+
+
+def get_processed_data():
+    lines = get_input_text(3).strip().split("\n")
+    records = pd.DataFrame(lines_to_records(lines))
+    records["is_number"] = records["element"].str.isnumeric()
+    records = records.set_index(["pos", "line"])
+    return records
 
 
 if __name__ == "__main__":
