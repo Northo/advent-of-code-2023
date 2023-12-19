@@ -33,9 +33,22 @@ class Card:
             present_numbers=_to_numbers(present),
         )
 
+    @property
+    def winning_numbers_overlap(self):
+        return set(self.winning_numbers) & set(self.present_numbers)
+
+    @property
+    def points(self):
+        """Points from this card."""
+        if not self.winning_numbers_overlap:
+            return 0
+
+        return 2 ** (len(self.winning_numbers_overlap) - 1)
+
 
 def main():
     lines = get_input_text(4).strip().split("\n")
+    cards = [Card.parse_from_line(line) for line in lines]
 
 
 if __name__ == "__main__":

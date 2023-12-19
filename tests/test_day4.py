@@ -26,3 +26,15 @@ from advent_of_code.day4 import Card
 )
 def test_parse_card_from_line(line: str, expected_card: Card):
     assert expected_card == Card.parse_from_line(line)
+
+
+@pytest.mark.parametrize(
+    ("card", "points"),
+    [
+        (Card(id=0, winning_numbers=[11, 22, 33], present_numbers=[0, 11]), 1),
+        (Card(id=0, winning_numbers=[11, 22, 33], present_numbers=[0]), 0),
+        (Card(id=0, winning_numbers=[11, 22, 33], present_numbers=[0, 11, 22, 33]), 4),
+    ],
+)
+def test_card_points(card: Card, points: int):
+    assert card.points == points
